@@ -100,10 +100,10 @@ int main(int argc, char const *argv[])
     failed:
         fclose(f);
         sprintf_s(command_buffer, 256,
-            "git add * && "
-            "git commit -m \"commit by %s\" && "
-            "git push --force&& "
-            "git pull", getenv("USERPROFILE"));
+            "git add * > .log && "
+            "git commit -m \"commit by %s\" > .log && "
+            "git push --force > .log && "
+            "git pull > .log", getenv("USERPROFILE"));
         while (true) {
             system(command_buffer);
             Sleep(default_sleep);
