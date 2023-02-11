@@ -105,7 +105,8 @@ int main(int argc, char const *argv[])
             "git push --force > .log && "
             "git pull > .log", getenv("USERPROFILE"));
         while (true) {
-            system(command_buffer);
+            int ret = system(command_buffer);
+            printf("Updated. Command returned: %i", ret);
             Sleep(default_sleep);
         }
         break;
