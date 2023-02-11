@@ -79,6 +79,7 @@ int main(int argc, char const *argv[])
         int default_sleep = 5000;
         srand(time(NULL));
         _putws(git_icon[rand()%4]);
+        puts("");
         FILE* f = fopen(".gitgore", "r");
         if (!f) {
             perror("Failed to load config.");
@@ -106,7 +107,7 @@ int main(int argc, char const *argv[])
             "git pull > .log", getenv("USERPROFILE"));
         while (true) {
             int ret = system(command_buffer);
-            printf("Updated. Command returned: %i", ret);
+            printf("Updated. Command returned: %i\n", ret);
             Sleep(default_sleep);
         }
         break;
