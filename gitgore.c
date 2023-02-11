@@ -56,7 +56,7 @@ int main(int argc, char const *argv[])
     switch (argc) {
     case 3:
         if (!strcmp(argv[1], "set")) {
-            FILE* f = fopen(".gitgore-repo", "w");
+            FILE* f = fopen(".gitgore", "w");
             if (!f) {
                 perror("Failed to set repository.");
                 return EXIT_FAILURE;
@@ -76,19 +76,29 @@ int main(int argc, char const *argv[])
             return EXIT_FAILURE;
         }
     case 1: {
+        int default_sleep = 5000;
         srand(time(NULL));
         _putws(git_icon[rand()%4]);
-        // FILE* f = fopen(".gitgore-repo", "r");
-        // if (!f) {
-        //     perror("Failed to load repository name.");
-        //     return EXIT_FAILURE;
-        // }
-        // int temp;
-        // int index = 0;
-        // while ((temp = fgetc(f)) != EOF && index < 256) {
-        //     reponame_buffer[index] = temp;
-        // }
-        // fclose(f);
+        FILE* f = fopen(".gitgore", "r");
+        if (!f) {
+            perror("Failed to load config.");
+            return EXIT_FAILURE;
+        }
+        int temp;
+        int index = 0;
+        while ((temp = fgetc(f)) != EOF && index < 256) {
+            reponame_buffer[index++] = temp;
+        }
+        reponame_buffer[index] = 0;
+        for (size_t i = 0; i < strlen(reponame_buffer); i++)
+        {
+            if (!isdigit(reponame_buffer[i])) {
+                goto failed;
+            }
+        }
+        default_sleep = atoi(reponame_buffer);
+    failed:
+        fclose(f);
         sprintf_s(command_buffer, 256,
             "git add * && "
             "git commit -m \"commit by %s\" && "
@@ -96,7 +106,7 @@ int main(int argc, char const *argv[])
             "git pull", getenv("USERPROFILE"));
         while (true) {
             system(command_buffer);
-            Sleep(1000);
+            Sleep(default_sleep);
         }
         break;
     }
