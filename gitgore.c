@@ -107,7 +107,7 @@ int main(int argc, char const *argv[])
             "git pull > .log", getenv("USERPROFILE"));
         while (true) {
             int ret = system(command_buffer);
-            printf("Updated. Command returned: %i\n", ret);
+            printf("Updated. Command returned: %i\r", ret);
             Sleep(default_sleep);
         }
         break;
