@@ -78,7 +78,7 @@ int main(int argc, char const *argv[])
     case 1: {
         int default_sleep = 5000;
         srand(time(NULL));
-        _putws(git_icon[rand()%4]);
+        wprintf(git_icon[rand()%4]);
         puts("");
         FILE* f = fopen(".gitgore", "r");
         if (!f) {
