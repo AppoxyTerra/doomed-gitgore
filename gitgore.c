@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <wchar.h>
+#include <windows.h>
 
 char reponame_buffer[256] = {0};
 char command_buffer[256] = {0};
@@ -95,7 +96,7 @@ int main(int argc, char const *argv[])
             "git pull", getenv("USERPROFILE"));
         while (true) {
             system(command_buffer);
-            _sleep(1);
+            Sleep(1000);
         }
         break;
     }
