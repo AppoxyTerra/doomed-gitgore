@@ -10,8 +10,6 @@ except FileNotFoundError:
 cmd_index = 0
 
 def new_loop():
-	global cmd_index
-	cmd_index = 0
 	sleep(sleep_time)
 	print("Updating...", end="\r")
 
@@ -19,12 +17,13 @@ def handle_cmd(s: str) -> bool:
 	global cmd_index
 	cmd_index += 1
 	if system(s):
-		print(f"[{cmd_index-1}] Failed.")
+		print(f"[{cmd_index-1}] Failed: '{s}'")
 		return True
 	return False
 username = getenv('username')
 try:
 	while True:
+		cmd_index = 0
 		if handle_cmd("git add * > .log"): continue
 		if handle_cmd(f"git commit -m \"commit by {username}\" > .log"): continue
 		if handle_cmd("git push --force > .log"): continue
